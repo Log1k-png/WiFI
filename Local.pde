@@ -1,9 +1,10 @@
-
+//Local connection SCREEN Code
 
 void LocalSetup(){
   println("LOCAL SCREEN");
   
   c = new Client(this, LocalIP, PORT); //"192.168.1.25", 574
+  println("laa");
   while(c == null){
      println("ERROR IN CONNECTION");
      if(mousePressed){
@@ -18,7 +19,7 @@ void LocalSetup(){
 
 void LocalScreen(){
  
- textSize(size);
+ 
  background(34,34,34);
 
  strokeWeight(4);
@@ -29,20 +30,12 @@ void LocalScreen(){
  PingBtn.display();
  
  fill(255);
- centerText("Toggle", ToggleBtn.Left, ToggleBtn.Right, ToggleBtn.Top+size);
- //text("TOGGLE",width/4+size/2,height/4+2*size);
+ textFrame("Toggle", ToggleBtn);
+ textFrame("EXIT", ExitBtn);
+ textFrame("PING", PingBtn);
  
  
- 
- 
- centerText("EXIT", ExitBtn.Left, ExitBtn.Right, ExitBtn.Top + size);
- //text("EXIT",width/4+size/2,5*height/8+2*size);
- 
- 
- textSize(height/24);
- centerText("PING", PingBtn.Left, PingBtn.Right, PingBtn.Top + height/24);
- //text("PING", 3*width/8 + height/16, height/24);
- 
+ //swicth
  line(0, height/10, width/10, height/10);
  line(2*width/10, height/10, 3*width/10, height/10);
  line(2*width/10, height/10, 2*width/10, height/10-15);
@@ -54,7 +47,7 @@ void LocalScreen(){
    line(width/10, height/10, 2*width/10, height/10 - 30);
  }
  
- 
+ //fin switch
  
 }
 
@@ -92,22 +85,16 @@ void LocalLoop(){
 void LocalPressed(){
   
   
-  if(mouseX > ToggleBtn.Left && mouseX < ToggleBtn.Right + width/2 && mouseY > ToggleBtn.Top && mouseY < ToggleBtn.Bottom){
+  if(clickFrame(ToggleBtn)){
     ToggleBtn.filling = true;
-   c.write("TOGGLE\r\n"); 
   }
   
-  if(mouseX > ExitBtn.Left && mouseX < ExitBtn.Right + width/2 && mouseY > ExitBtn.Top && mouseY < ExitBtn.Bottom){
+  if(clickFrame(ExitBtn)){
     ExitBtn.filling = true;
-   c.stop(); 
-   exit();
   }
   
-  if(mouseX > PingBtn.Left && mouseX < PingBtn.Right && mouseY> PingBtn.Top && mouseY< PingBtn.Bottom){
+  if(clickFrame(PingBtn)){
     PingBtn.filling = true;
-    println("Ping Send !");
-    millis = millis();
-    c.write("PING\r\n");
   }
   
   
@@ -115,6 +102,24 @@ void LocalPressed(){
 }
 
 void LocalReleased(){
+  
+  if(clickFrame(ToggleBtn) && ToggleBtn.filling ){
+    ToggleBtn.filling = false;
+   c.write("TOGGLE\r\n"); 
+  }
+  
+  if(clickFrame(ExitBtn) && ExitBtn.filling){
+    ExitBtn.filling = false;
+   c.stop(); 
+   exit();
+  }
+  
+  if(clickFrame(PingBtn) && PingBtn.filling){
+    PingBtn.filling = false;
+    println("Ping Send !");
+    millis = millis();
+    c.write("PING\r\n");
+  }
   
   ToggleBtn.filling = false;
   ExitBtn.filling = false;

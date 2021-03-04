@@ -1,4 +1,7 @@
+//Menu screen code
 
+Frame DirectCoBtn = new Frame();
+Frame LocalCoBtn = new Frame();
 
 
 void MenuSetup(){
@@ -6,6 +9,16 @@ void MenuSetup(){
   
   
   textAlign(CENTER,CENTER);
+  
+    DirectCoBtn.defineLength(width/4,height/8,width/2,height/4);
+  DirectCoBtn.Border = color(255);
+  DirectCoBtn.Fill = color(255, 64);
+  DirectCoBtn.filling = false;
+  
+  LocalCoBtn.defineLength(width/4,height/2,width/2,height/4);
+  LocalCoBtn.Border = color(255);
+  LocalCoBtn.Fill = color(255, 64);
+  LocalCoBtn.filling = false;
   
   }
 
@@ -50,12 +63,12 @@ void MenuReleased(){
   
   
   
-  if(clickFrame(DirectCoBtn) && DirectCoBtn.filling == true){
+  if(clickFrame(DirectCoBtn) && DirectCoBtn.filling ){
     DirectCoBtn.filling = false;
     screen = "Direct";
   }
   
-  else if(clickFrame(LocalCoBtn) && LocalCoBtn.filling == true){
+  else if(clickFrame(LocalCoBtn) && LocalCoBtn.filling ){
     LocalCoBtn.filling = false;
     screen = "Local";
   }
